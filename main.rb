@@ -18,6 +18,4 @@ test.set('kite', 'pink')
 test.set('lion', 'golden')
 test.set('carrot', 'purple')
 
-p test.buckets
-
-p test.buckets.length
+puts "Get elephant: #{test.get('elephant')}"

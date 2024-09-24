@@ -23,18 +23,24 @@ class HashMap
   def set(key, value)
     hash_code = hash(key) # Compute the hash code for the key
     bucket_index = hash_code % @buckets.length # Find the correct bucket
-    # Initialize the bucket if it's empty
-    @buckets[bucket_index] ||= []
-
-    # Check if the key already exists in the bucket
-    @buckets[bucket_index].each do |pair|
-      if pair.key?(key)
-        pair[key] = value # Key exists, update the value
-        return nil
-      end
+    if @buckets[bucket_index].nil?
+      # No existing key-value pair: insert the new key-value pair
+      @buckets[bucket_index] = { key => value }
+      # Check if the same key is already present
+    elsif @buckets[bucket_index].key?(key)
+      # Key already exists, so update the value
+      @buckets[bucket_index][key] = value
+    else
+      # Collision detected: different key in the same bucket
+      puts 'COLLISION: we need a bigger bucket'
     end
+  end
 
-    # If the key doesn't exist, add a new hash { key => value }
-    @buckets[bucket_index] << { key => value }
+  def get(key)
+    hash_code = hash(key) # Compute the hash code for the key
+    bucket_index = hash_code % @buckets.length # Find the correct bucket
+    return nil if @buckets[bucket_index].nil?
+
+    @buckets[bucket_index][key]
   end
 end
