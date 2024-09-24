@@ -30,7 +30,7 @@ class HashMap
     @buckets[bucket_index].each do |pair|
       if pair.key?(key)
         pair[key] = value # Key exists, update the value
-        break
+        return nil
       end
     end
 
