@@ -95,7 +95,7 @@ class HashMap
   def values
     values = []
     @buckets.each do |bucket|
-      values << bucket[:values] unless bucket.nil?
+      values << bucket[:value] unless bucket.nil?
     end
     values
   end
