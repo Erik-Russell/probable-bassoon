@@ -25,11 +25,11 @@ class HashMap
     bucket_index = hash_code % @buckets.length # Find the correct bucket
     if @buckets[bucket_index].nil?
       # No existing key-value pair: insert the new key-value pair
-      @buckets[bucket_index] = { key => value }
+      @buckets[bucket_index] = { key: key, value: value }
       # Check if the same key is already present
-    elsif @buckets[bucket_index].key?(key)
+    elsif @buckets[bucket_index][:key] == key
       # Key already exists, so update the value
-      @buckets[bucket_index][key] = value
+      @buckets[bucket_index][:value] = value
     else
       # Collision detected: different key in the same bucket
       puts 'COLLISION: we need a bigger bucket'
@@ -41,7 +41,7 @@ class HashMap
     bucket_index = hash_code % @buckets.length # Find the correct bucket
     return nil if @buckets[bucket_index].nil?
 
-    @buckets[bucket_index][key]
+    @buckets[bucket_index][:value] if @buckets[bucket_index][:key] == key
   end
 
   def has?(key)
@@ -49,7 +49,7 @@ class HashMap
       # puts "testing pair:#{pair}"
       next if pair.nil?
 
-      if pair.key?(key)
+      if pair[:key] == key
         # puts 'found'
         return true
       end
@@ -83,7 +83,7 @@ class HashMap
   def keys
     keys = []
     @buckets.each do |bucket|
-      keys << bucket.keys.join unless bucket.nil?
+      keys << bucket[:key] unless bucket.nil?
     end
     keys
   end
@@ -91,8 +91,18 @@ class HashMap
   def values
     values = []
     @buckets.each do |bucket|
-      values << bucket.values.join unless bucket.nil?
+      values << bucket[:values] unless bucket.nil?
     end
     values
+  end
+
+  def entries
+    entries = []
+
+    @buckets.each do |bucket|
+      entries << [bucket[:key], bucket[:value]] if bucket
+    end
+
+    entries
   end
 end

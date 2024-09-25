@@ -22,5 +22,6 @@ puts "Get elephant: #{test.get('elephant')}"
 
 puts "#length: #{test.length}"
 
-p test.keys
-p test.values
+puts test.buckets
+
+p test.entries
