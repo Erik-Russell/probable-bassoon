@@ -19,3 +19,8 @@ test.set('lion', 'golden')
 test.set('carrot', 'purple')
 
 puts "Get elephant: #{test.get('elephant')}"
+
+puts "#length: #{test.length}"
+
+p test.keys
+p test.values

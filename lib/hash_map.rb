@@ -67,4 +67,32 @@ class HashMap
     @buckets[bucket_index] = nil
     output
   end
+
+  def length
+    count = 0
+    @buckets.each do |bucket|
+      count += 1 unless bucket.nil?
+    end
+    count
+  end
+
+  def clear
+    @buckets.fill(nil)
+  end
+
+  def keys
+    keys = []
+    @buckets.each do |bucket|
+      keys << bucket.keys.join unless bucket.nil?
+    end
+    keys
+  end
+
+  def values
+    values = []
+    @buckets.each do |bucket|
+      values << bucket.values.join unless bucket.nil?
+    end
+    values
+  end
 end
