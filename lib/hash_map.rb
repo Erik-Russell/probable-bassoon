@@ -46,15 +46,25 @@ class HashMap
 
   def has?(key)
     @buckets.each do |pair|
-      puts "testing pair:#{pair}"
+      # puts "testing pair:#{pair}"
       next if pair.nil?
 
       if pair.key?(key)
-        puts 'success'
+        # puts 'found'
         return true
       end
     end
-    puts 'the end'
+    # puts 'none found'
     false
+  end
+
+  def remove(key)
+    return nil unless has?(key)
+
+    output = get(key)
+    hash_code = hash(key) # Compute the hash code for the key
+    bucket_index = hash_code % @buckets.length # Find the correct bucket
+    @buckets[bucket_index] = nil
+    output
   end
 end
