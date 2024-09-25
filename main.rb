@@ -18,10 +18,6 @@ test.set('kite', 'pink')
 test.set('lion', 'golden')
 test.set('carrot', 'purple')
 
-puts "Get elephant: #{test.get('elephant')}"
-
-puts "#length: #{test.length}"
-
-puts test.buckets
-
 p test.entries
+
+p test.length

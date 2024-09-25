@@ -7,7 +7,8 @@ class HashMap
   attr_reader :buckets
 
   def initialize
-    @buckets = Array.new(16)
+    @capacity = 16
+    @buckets = Array.new(@capacity)
     @load_factor = 0.75
   end
 
@@ -32,8 +33,11 @@ class HashMap
       @buckets[bucket_index][:value] = value
     else
       # Collision detected: different key in the same bucket
-      puts 'COLLISION: we need a bigger bucket'
+      puts 'making more buckets'
+      rehash
+      set(key, value)
     end
+    rehash if getting_full?
   end
 
   def get(key)
@@ -104,5 +108,46 @@ class HashMap
     end
 
     entries
+  end
+
+  private
+
+  def getting_full?
+    load >= @load_factor
+  end
+
+  def load
+    length / @buckets.length.to_f
+  end
+
+  def rehash
+    @capacity = @buckets.length * 2
+    rehash_buckets = Array.new(@capacity) # Create a new larger bucket array
+
+    rehash_insert = lambda { |index, current|
+      if rehash_buckets[index].nil?
+        # Insert the key-value pair in the new bucket
+        rehash_buckets[index] = { key: current[:key], value: current[:value] }
+      else
+        # Handle collision (for now, just overwrite; you can implement a more complex strategy if needed)
+        puts "COLLISION: overwriting key #{current[:key]}"
+        rehash_buckets[index][:key] = current[:key]
+        rehash_buckets[index][:value] = current[:value]
+      end
+    }
+
+    @buckets.each do |bucket|
+      next if bucket.nil? # Skip empty buckets
+
+      # Compute the new bucket index for the current key
+      index = hash(bucket[:key]) % @capacity
+
+      # Insert into the new rehash_buckets
+      rehash_insert.call(index, bucket)
+    end
+
+    # Replace old buckets with the new rehashed ones
+    @buckets = rehash_buckets
+    puts "buckets size is now #{@capacity} :: #{@buckets.length}"
   end
 end
