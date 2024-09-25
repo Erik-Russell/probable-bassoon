@@ -33,7 +33,6 @@ class HashMap
       @buckets[bucket_index][:value] = value
     else
       # Collision detected: different key in the same bucket
-      puts 'making more buckets'
       rehash
       set(key, value)
     end
@@ -121,6 +120,7 @@ class HashMap
   end
 
   def rehash
+    puts 'making more buckets'
     @capacity = @buckets.length * 2
     rehash_buckets = Array.new(@capacity) # Create a new larger bucket array
 

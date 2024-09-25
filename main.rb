@@ -2,6 +2,9 @@
 
 require_relative 'lib/hash_map'
 
+puts 'This is a test of the custom'
+puts 'HashMap class.'
+
 test = HashMap.new
 
 test.set('apple', 'red')
@@ -18,6 +21,4 @@ test.set('kite', 'pink')
 test.set('lion', 'golden')
 test.set('carrot', 'purple')
 
-p test.entries
-
-p test.length
+puts "The length should be 12 => acutal:#{test.length}"
