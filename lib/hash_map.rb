@@ -43,4 +43,18 @@ class HashMap
 
     @buckets[bucket_index][key]
   end
+
+  def has?(key)
+    @buckets.each do |pair|
+      puts "testing pair:#{pair}"
+      next if pair.nil?
+
+      if pair.key?(key)
+        puts 'success'
+        return true
+      end
+    end
+    puts 'the end'
+    false
+  end
 end
